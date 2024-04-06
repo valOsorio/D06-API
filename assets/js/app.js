@@ -10,7 +10,7 @@ const getMonedas = async (moneda) => {
     const res = await fetch(`${url}/${moneda}`);
     const data = await res.json();
     const { serie } = data;
-    const datos = createDataToChart(serie.slice(0, 9).reverse());
+    const datos = createDataToChart(serie.slice(-10).reverse());
     renderGrafica(datos);
     const [{ valor: valorDeLaMoneda }] = serie;
     return valorDeLaMoneda;
