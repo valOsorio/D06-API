@@ -15,7 +15,7 @@ const getMonedas = async (moneda) => {
     const [{ valor: valorDeLaMoneda }] = serie;
     return valorDeLaMoneda;
   } catch (error) {
-    alert(error.message);
+    alert(error.message); // Esto es para mostrar alerta "Failed to Fetch"
   }
 };
 
@@ -56,7 +56,15 @@ const FormatDate = (date) => {
 btn.addEventListener("click", async () => {
   const { value: pesos } = input;
   const { value: monedaSelected } = select;
+  if (isNaN(parseFloat(pesos)) || parseFloat(pesos) <= 0) {
+    alert("Por favor, ingrese una cantidad valida y positiva en pesos")
+    return
+  }
   const valorDeLaMoneda = await getMonedas(monedaSelected);
+  if (!isFinite(valorDeLaMoneda)) {
+    alert("El valor de la moneda seleccionada no es valido")
+    return
+  }
   const valorFinal = (pesos / valorDeLaMoneda).toFixed(2);
   span.innerHTML = `Resultado: $${valorFinal}`;
 });
